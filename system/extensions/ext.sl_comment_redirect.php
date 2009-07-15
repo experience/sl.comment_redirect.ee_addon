@@ -50,7 +50,7 @@ class Sl_comment_redirect {
 	 *
 	 * @var string
 	 */
-   var $description = 'Redirect to a custom URL after comment submission.';
+   var $description = 'Automatically redirect visitors to the URL of your choosing after comment submission.';
 
 	/**
 	 * If $settings_exist = 'y', the settings page will be displayed in EE admin.
