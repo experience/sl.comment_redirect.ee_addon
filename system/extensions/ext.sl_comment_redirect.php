@@ -26,50 +26,46 @@ class Sl_comment_redirect {
 	
 	/**
 	 * Extension settings.
+	 *
 	 * @var array
 	 */
-   var $settings        = array();
+   var $settings = array();
 
 	/**
 	 * Extension name.
+	 *
 	 * @var string
 	 */
-   var $name            = SL_CRD_name;
+   var $name = SL_CRD_name;
 
 	/**
 	 * Extension version.
+	 *
 	 * @var string
 	 */
-   var $version         = SL_CRD_version;
+   var $version = SL_CRD_version;
 
 	/**
 	 * Extension description.
+	 *
 	 * @var string
 	 */
-   var $description     = 'Redirect to a custom URL after comment submission.';
+   var $description = 'Redirect to a custom URL after comment submission.';
 
 	/**
 	 * If $settings_exist = 'y', the settings page will be displayed in EE admin.
+	 *
 	 * @var string
 	 */
-   var $settings_exist  = 'y';
+   var $settings_exist = 'y';
 
 	/**
 	 * Link to extension documentation.
+	 *
 	 * @var string
 	 */
    var $docs_url = SL_CRD_docs_url;
-
-	/**
-	 * We store all our assets (CSS, JS, and images) in a folder in "themes", so
-	 * people can theoretically reskin everything, and even change the behaviour
-	 * of the extension, should they find themselves with nothing better to do.
-	 */
-	var $asset_dir	= '';
-	var $css_dir		= '';
-	var $js_dir			= '';
-	var $img_dir		= '';
-	var $utils_dir	= '';
+   
 
 	/**
 	 * PHP4 constructor.
@@ -96,7 +92,11 @@ class Sl_comment_redirect {
 		$settings = FALSE;
 
 		// Retrieve the settings from the database.
-		$query = $DB->query("SELECT settings FROM exp_extensions WHERE enabled = 'y' AND class = '" . get_class($this) . "' LIMIT 1");
+		$query = $DB->query("SELECT settings
+		  FROM exp_extensions
+		  WHERE enabled = 'y'
+		  AND class = '" . get_class($this) . "' LIMIT 1");
+		  
 		if ($query->num_rows == 1 && $query->row['settings'] != '')
 		{
 			$settings = $REGX->array_stripslashes(unserialize($query->row['settings']));
@@ -282,9 +282,8 @@ class Sl_comment_redirect {
 		global $DSP, $LANG;
 
 		// Start building the page.
-		// $headers 				= $this->_settings_form_headers();			  // Additional CSS and JS headers.		
-		$breadcrumbs 		= $this->_settings_form_breadcrumbs();			  // Breadcrumbs.
-		$browser_title 	= $LANG->line('extension_settings');		// Browser title.
+		$breadcrumbs = $this->_settings_form_breadcrumbs();
+		$browser_title = $LANG->line('extension_settings');
 
 		// Body
 		$body  = '';
@@ -311,10 +310,10 @@ class Sl_comment_redirect {
 
 		// Output everything.
 		// $DSP->extra_header	.= $headers;
-		$DSP->title 				= $browser_title;
-		$DSP->crumbline 		= TRUE;
-		$DSP->crumb 				= $breadcrumbs;
-		$DSP->body 					= $body;
+		$DSP->title 		= $browser_title;
+		$DSP->crumbline = TRUE;
+		$DSP->crumb 		= $breadcrumbs;
+		$DSP->body 			= $body;
 	}
 
 
@@ -356,15 +355,15 @@ class Sl_comment_redirect {
 		foreach ($hooks AS $hook => $method)
 		{
 			$sql[] = $DB->insert_string('exp_extensions', array(
-					'extension_id' => '',
-					'class'        => get_class($this),
-					'method'       => $method,
-					'hook'         => $hook,
-					'settings'     => '',
-					'priority'     => 10,
-					'version'      => $this->version,
-					'enabled'      => 'y'
-					));
+				'extension_id' => '',
+				'class'        => get_class($this),
+				'method'       => $method,
+				'hook'         => $hook,
+				'settings'     => '',
+				'priority'     => 10,
+				'version'      => $this->version,
+				'enabled'      => 'y'
+			));
 		}
 
 		// Run all the SQL queries.
